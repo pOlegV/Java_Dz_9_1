@@ -1,11 +1,23 @@
 public class Radio {
-    private int currentStation;
+    private int currentStation = 10;
+    private int maxCurrentStation;
     private int currentVolume;
+    private int minVolume = 0;
+    private int maxVolume = 100;
+
+    public Radio() {
+        this.maxCurrentStation = currentStation - 1;
+    }
+
+    public Radio(int currentStation) {
+        this.currentStation = currentStation;
+        this.maxCurrentStation = currentStation - 1;
+    }
 
     public void setCurrentStation(int station) {
         if (station < 0) {
             return;
-        } else if (station > 9) {
+        } else if (station > maxCurrentStation) {
             return;
         } else {
             currentStation = station;
@@ -13,11 +25,17 @@ public class Radio {
     }
 
     public int getCurrentStation() {
-        return currentStation;
+        if (currentStation < 0) {
+            return 0;
+        } else if (currentStation > maxCurrentStation) {
+            return 0;
+        } else {
+            return currentStation;
+        }
     }
 
     public void nextStation() {
-        if (currentStation == 9) {
+        if (currentStation == maxCurrentStation) {
             currentStation = 0;
         } else {
             currentStation++;
@@ -26,16 +44,16 @@ public class Radio {
 
     public void prevStation() {
         if (currentStation == 0) {
-            currentStation = 9;
+            currentStation = maxCurrentStation;
         } else {
             currentStation--;
         }
     }
 
     public void setCurrentVolume(int volume) {
-        if (volume < 0) {
+        if (volume < minVolume) {
             return;
-        } else if (volume > 10) {
+        } else if (volume > maxVolume) {
             return;
         } else {
             currentVolume = volume;
@@ -47,13 +65,13 @@ public class Radio {
     }
 
     public void increaseVolume() {
-        if (currentVolume < 10) {
+        if (currentVolume < maxVolume) {
             currentVolume++;
         }
     }
 
     public void decreaseVolume() {
-        if (currentVolume > 0) {
+        if (currentVolume > minVolume) {
             currentVolume--;
         }
     }
